@@ -27,12 +27,16 @@ namespace HotelManagementSystem.Api.Controllers
     {
         private readonly AppSettings _appSettings;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IUserRepository _userRepository;
 
-        public AccountController(IOptions<AppSettings> options, IUserRepository userRepository, SignInManager<ApplicationUser> signInManager)
+        public AccountController(IOptions<AppSettings> options, IUserRepository userRepository, SignInManager<ApplicationUser> signInManager, RoleManager<IdentityRole> roleManager, UserManager<ApplicationUser> userManager)
         {
             _userRepository = userRepository;
             _signInManager = signInManager;
+            _roleManager = roleManager;
+            _userManager = userManager;
             _appSettings = options.Value;
         }
 
@@ -98,10 +102,24 @@ namespace HotelManagementSystem.Api.Controllers
             var result = await _userRepository.CreateUser(model);
             if (result.Succeeded)
             {
+                var applicationUser = await _userManager.FindByEmailAsync(model.Email);
+
+                var addUserToRole = await _userManager.AddToRoleAsync(applicationUser, "User");
+
+                //Send confirmation email here
+
+                if (addUserToRole.Succeeded)
+                {
+                    return Ok(new SuccessModel()
+                    {
+                        StatusCode = StatusCodes.Status200OK,
+                        SuccessMessage = "User created successfully"
+                    });
+                }
                 return Ok(new SuccessModel()
                 {
                     StatusCode = StatusCodes.Status200OK,
-                    SuccessMessage = "User created successfully"
+                    SuccessMessage = "User created successfully but can not assign to a role. Please contact with administrator."
                 });
             }
             else
