@@ -9,10 +9,9 @@ namespace HotelManagementSystem.Api.Extension
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
-            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
-
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IHotelRepository, HotelRepository>();
+            services.AddScoped<IHotelImagesRepository, HotelImagesRepository>();
   
             return services;
         }

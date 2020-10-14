@@ -19,5 +19,8 @@ namespace DataAccess.Data
             builder.Entity<ApplicationUser>().ToTable("Users");
             builder.Entity<IdentityRole>().ToTable("Role");
         }
+
+        public DbSet<HotelRoom> HotelRooms { get; set; }
+        public DbSet<HotelRoomImage> HotelRoomImages { get; set; }
     }
 }

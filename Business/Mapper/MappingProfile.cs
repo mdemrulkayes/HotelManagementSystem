@@ -11,6 +11,8 @@ namespace Business.Mapper
             //Map Model from DTO
             CreateMap<ApplicationUser, UserDTO>()
                 .ForMember(x => x.PhoneNo, opt => { opt.MapFrom(src => src.PhoneNumber); });
+            CreateMap<HotelRoom, HotelRoomRequestDTO>();
+
 
             //Map DTO from Model
             CreateMap<UserRequestDTO, ApplicationUser>()
@@ -27,7 +29,8 @@ namespace Business.Mapper
                 .ForMember(x => x.UserName,
                     opt => opt.Ignore())
                 .ForMember(dest => dest.PhoneNumber, opt => opt.MapFrom(src => src.PhoneNo));
-
+            
+            CreateMap<HotelRoomRequestDTO, HotelRoom>().ForMember(x => x.Id, opt => opt.Ignore());
         }
     }
 }
