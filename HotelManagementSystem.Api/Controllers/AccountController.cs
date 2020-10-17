@@ -409,7 +409,7 @@ namespace HotelManagementSystem.Api.Controllers
             user.Role = roles.Count > 0 ? roles[0] : "User";
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.SecretKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(1);
+            var expires = DateTime.Now.AddDays(30);
 
             var token = new JwtSecurityToken(
                 issuer: _appSettings.ValidIssuer,

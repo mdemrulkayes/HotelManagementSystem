@@ -67,8 +67,8 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
 
         public async Task HandleCheckout()
         {
-            var userDetailsOnSignIn = await LocalStorageService.GetItemAsync<UserDTO>("UserDetails");
             IsProcessStart = true;
+            var userDetailsOnSignIn = await LocalStorageService.GetItemAsync<UserDTO>("UserDetails");
             try
             {
                 long totalDays = HotelRoomBooking.RoomOrderDetails.CheckOutDate
@@ -78,7 +78,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
                 {
                     totalDays = 1;
                 }
-                var PaymentDto = new StripePaymentDTO()
+                var paymentDto = new StripePaymentDTO()
                 {
                     //UserId = "e17daf5e-be34-447d-ab1b-1202b438dc49",
                     Amount = totalDays * Convert.ToInt64(HotelRoomBooking.HotelRoom.RegularRate),
@@ -87,7 +87,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
                 };
                 
 
-                var result = await StripePaymentService.Checkout(PaymentDto);
+                var result = await StripePaymentService.Checkout(paymentDto);
 
                 #region Store Order details without payment successful status and room is not booked yet
 

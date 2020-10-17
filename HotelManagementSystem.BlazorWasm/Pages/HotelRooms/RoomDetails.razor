@@ -16,7 +16,7 @@ else
     else
     {
         <EditForm Model="@HotelRoomBooking" OnValidSubmit="@HandleCheckout">
-            <DataAnnotationsValidator />
+            
             <div class="row mt-4">
                 <div class="col-md-6">
                     <div class="card">
@@ -71,6 +71,9 @@ else
 
                     </div>
                     <div class="form-group">
+                        <DataAnnotationsValidator />
+                    </div>
+                    <div class="form-group">
                         <label>Check IN Date</label>
                         <InputDate @bind-Value="@HotelRoomBooking.RoomOrderDetails.CheckInDate" @bind-Value:format="dd/MM/yyyy" class="form-control"></InputDate>
                         <ValidationMessage For="@(() => HotelRoomBooking.RoomOrderDetails.CheckInDate)" />
@@ -94,7 +97,7 @@ else
                             }
                             else
                             {
-                                <button class="btn btn-primary btn-block">Checkout Now</button>
+                                <input type="submit" class="btn btn-primary btn-block" value="Checkout Now" />
                             }
 
                         }
