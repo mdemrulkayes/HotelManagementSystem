@@ -1,0 +1,38 @@
+﻿@page "/"
+@page "/hotel/rooms"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@inherits IndexBase
+
+<div class="row mt-4">
+    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+    {
+        <h3 class="text-danger">@ErrorMessage</h3>
+
+    }
+    else
+    {
+        if (Rooms.Any())
+        {
+            foreach (var room in Rooms)
+            {
+                var roomImageUrl = room.HotelRoomImages.Count > 0 ? room.HotelRoomImages.FirstOrDefault()?.RoomImageUrl : "";
+                <div class="col-md-4">
+                    <div class="card">
+                        <img class="card-img-top" src="@roomImageUrl" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@room.Name</h5>
+                            <p class="card-text">@room.Details</p>
+                            <a href="@($"hotel/room-details/{room.Id}")" class="btn btn-primary btn-block">Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="spinner"></div>
+        }
+    }
+
+</div>

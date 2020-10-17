@@ -1,0 +1,107 @@
+﻿@page "/hotel/room-details/{Id:int}"
+@attribute [Authorize]
+@using Microsoft.AspNetCore.Authorization
+@inherits RoomDetailsBase
+
+@if (!string.IsNullOrWhiteSpace(ErrorMessage))
+{
+    <Error ErrorMessage="@ErrorMessage" />
+}
+else
+{
+    if (HotelRoomBooking == null || HotelRoomBooking.HotelRoom == null || HotelRoomBooking.HotelRoom.HotelRoomImages == null)
+    {
+        <div class="spinner"></div>
+    }
+    else
+    {
+        <EditForm Model="@HotelRoomBooking" OnValidSubmit="@HandleCheckout">
+            <DataAnnotationsValidator />
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <div class="card">
+                        @{
+                            var roomImageUrl = HotelRoomBooking.HotelRoom.HotelRoomImages.Count > 0 ? HotelRoomBooking.HotelRoom.HotelRoomImages.FirstOrDefault()?.RoomImageUrl : "";
+
+                        }
+
+                        <div class="card-header">@HotelRoomBooking.HotelRoom.Name</div>
+                        <img class="card-img-top" src="@roomImageUrl" alt="Card image cap">
+                        <div class="card-body">
+                            <input type="hidden" @bind="HotelRoomBooking.HotelRoom.Name" />
+                            <input type="hidden" @bind="HotelRoomBooking.HotelRoom.RegularRate" />
+                            <input type="hidden" @bind="HotelRoomBooking.HotelRoom.Id" />
+                            <input type="hidden" @bind="HotelRoomBooking.ImageUrl" />
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i class="fa fa-users"></i> @HotelRoomBooking.HotelRoom.Occupancy
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i class="fa fa-money"></i> @HotelRoomBooking.HotelRoom.RegularRate
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i class="fa fa-building"></i> @HotelRoomBooking.HotelRoom.SqrFt
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i class="fa fa-eye-slash"></i> @HotelRoomBooking.HotelRoom.Details
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <i class="fa fa-terminal"></i> @(HotelRoomBooking.HotelRoom.IsBooked ? "Booked" : "Open")
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                        {
+                            <Error ErrorMessage="@ErrorMessage" />
+                        }
+
+                    </div>
+                    <div class="form-group">
+                        <label>Check IN Date</label>
+                        <InputDate @bind-Value="@HotelRoomBooking.RoomOrderDetails.CheckInDate" @bind-Value:format="dd/MM/yyyy" class="form-control"></InputDate>
+                        <ValidationMessage For="@(() => HotelRoomBooking.RoomOrderDetails.CheckInDate)" />
+                    </div>
+                    <div class="form-group">
+                        <label>Check Out Date</label>
+                        <InputDate @bind-Value="@HotelRoomBooking.RoomOrderDetails.CheckOutDate" @bind-Value:format="dd/MM/yyyy" class="form-control"></InputDate>
+                        <ValidationMessage For="@(() => HotelRoomBooking.RoomOrderDetails.CheckInDate)" />
+                    </div>
+                    <div class="form-group">
+
+                        @if (IsProcessStart)
+                        {
+                            <button class="btn btn-primary btn-block" disabled="disabled" type="button"><i class="fa fa-spin fa-spinner"></i> Processing..</button>
+                        }
+                        else
+                        {
+                            if (HotelRoomBooking.HotelRoom.IsBooked)
+                            {
+                                <button class="btn btn-primary btn-block" disabled="disabled">Checkout Now</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-primary btn-block">Checkout Now</button>
+                            }
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </EditForm>
+    }
+
+}

@@ -1,0 +1,27 @@
+﻿@page "/success-payment"
+@using Microsoft.AspNetCore.Authorization
+@inherits SuccessPaymentBase
+@attribute [Authorize]
+<div class="row mt-4">
+    @if (!IsPaymentComplete)
+    {
+        <div class="spinner"></div>
+    }
+    else
+    {
+        <div class="card">
+            <h5 class="card-title">Your room is successfully booked</h5>
+            <div class="form-group">
+                @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                {
+                    <Error ErrorMessage="@ErrorMessage" />
+                }
+                @if (!string.IsNullOrWhiteSpace(SuccessMessage))
+                {
+                    <Success SuccessMessage="@SuccessMessage" />
+                }
+            </div>
+        </div>
+    }
+
+</div>
