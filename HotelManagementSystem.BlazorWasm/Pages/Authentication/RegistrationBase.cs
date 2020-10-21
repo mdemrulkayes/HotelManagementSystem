@@ -36,7 +36,8 @@ namespace HotelManagementSystem.BlazorWasm.Pages.Authentication
                     Email = UserRegistrationVm.Email,
                     PhoneNo = UserRegistrationVm.PhoneNo,
                     Password = UserRegistrationVm.Password,
-                    ConfirmPassword = UserRegistrationVm.ConfirmPassword
+                    ConfirmPassword = UserRegistrationVm.ConfirmPassword,
+                    UserRole = UserRegistrationVm.UserRole
                 };
                 var result = await AuthenticationService.SignUp(userRequestDTO);
                 if (result.StatusCode == StatusCodes.Status200OK)

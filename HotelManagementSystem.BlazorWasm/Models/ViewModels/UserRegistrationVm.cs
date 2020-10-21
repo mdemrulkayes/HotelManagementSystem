@@ -22,5 +22,7 @@ namespace HotelManagementSystem.BlazorWasm.Models.ViewModels
         [CompareProperty("Password",
             ErrorMessage = "Password and Confirm Password must match")]
         public string ConfirmPassword { get; set; }
+
+        public string UserRole { get; set; } = "User";
     }
 }

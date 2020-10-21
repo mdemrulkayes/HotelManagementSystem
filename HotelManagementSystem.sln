@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "Business\Busine
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Common", "Common\Common.csproj", "{D0CC88DD-76B5-4B62-8D2B-5956F8D248DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelManagementSystem.BlazorWasm", "HotelManagementSystem.BlazorWasm\HotelManagementSystem.BlazorWasm.csproj", "{215136D0-537C-44F9-B1CC-6E2A0B25CFAF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.BlazorWasm", "HotelManagementSystem.BlazorWasm\HotelManagementSystem.BlazorWasm.csproj", "{215136D0-537C-44F9-B1CC-6E2A0B25CFAF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.BlazorServer", "HotelManagementSystem.BlazorServer\HotelManagementSystem.BlazorServer.csproj", "{AB6DD040-B970-43B5-A685-5A3EE5D969C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{215136D0-537C-44F9-B1CC-6E2A0B25CFAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{215136D0-537C-44F9-B1CC-6E2A0B25CFAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{215136D0-537C-44F9-B1CC-6E2A0B25CFAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

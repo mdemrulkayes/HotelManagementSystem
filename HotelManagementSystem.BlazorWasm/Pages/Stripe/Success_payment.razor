@@ -1,7 +1,7 @@
 ﻿@page "/success-payment"
 @using Microsoft.AspNetCore.Authorization
 @inherits SuccessPaymentBase
-@attribute [Authorize]
+@attribute [Authorize(Roles = "User,Developer")]
 <div class="row mt-4">
     @if (!IsPaymentComplete)
     {

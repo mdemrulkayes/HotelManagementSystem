@@ -12,6 +12,7 @@ namespace Business.Mapper
             CreateMap<ApplicationUser, UserDTO>()
                 .ForMember(x => x.PhoneNo, opt => { opt.MapFrom(src => src.PhoneNumber); });
             CreateMap<HotelRoom, HotelRoomRequestDTO>();
+            CreateMap<HotelRoomDTO, HotelRoomRequestDTO>();
             CreateMap<HotelRoom, HotelRoomDTO>();
             CreateMap<HotelRoomImage, HotelRoomImageDTO>();
 

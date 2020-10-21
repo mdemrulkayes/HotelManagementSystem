@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Components.Rendering;
 
 namespace HotelManagementSystem.BlazorWasm.Helpers
 {
-    public class AppRouteView: RouteView
+    public class AppRouteView : RouteView
     {
         [Inject]
         public NavigationManager NavigationManager { get; set; }
@@ -24,7 +24,7 @@ namespace HotelManagementSystem.BlazorWasm.Helpers
             var authorize = Attribute.GetCustomAttribute(RouteData.PageType, typeof(AuthorizeAttribute)) != null;
             var isLoggedIn = AuthenticationService.IsLoggedIn;
             var userDetails = AuthenticationService.User;
-           
+
 
             if (authorize && isLoggedIn == false && userDetails == null)
             {

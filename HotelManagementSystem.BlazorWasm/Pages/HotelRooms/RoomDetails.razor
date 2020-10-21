@@ -1,5 +1,5 @@
 ﻿@page "/hotel/room-details/{Id:int}"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "User,Developer")]
 @using Microsoft.AspNetCore.Authorization
 @inherits RoomDetailsBase
 
@@ -16,8 +16,8 @@ else
     else
     {
         <EditForm Model="@HotelRoomBooking" OnValidSubmit="@HandleCheckout">
-            
-            <div class="row mt-4">
+
+            <div class="row mt-4 mb-4">
                 <div class="col-md-6">
                     <div class="card">
                         @{

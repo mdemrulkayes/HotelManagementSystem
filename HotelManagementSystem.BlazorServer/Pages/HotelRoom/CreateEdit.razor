@@ -1,0 +1,78 @@
+﻿@page "/hotel-room/create"
+@page "/hotel-room/edit/{Id:int}"
+
+@inherits CreateEditBase
+
+<div class="row mt-4 mb-5">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">@Title Hotel Room</h5>
+                <EditForm Model="HotelRoomModel" OnValidSubmit="HandleHotelRoomCreate">
+                    <div class="form-group">
+                        <DataAnnotationsValidator />
+                        <ValidationSummary />
+                    </div>
+                    <div class="form-group">
+                        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                        {
+                            <Error ErrorMessage="@ErrorMessage" />
+                        }
+                        @if (!string.IsNullOrWhiteSpace(SuccessMessage))
+                        {
+                            <Success SuccessMessage="@SuccessMessage" />
+                        }
+                    </div>
+                    <div class="form-group">
+                        <label>Name</label>
+                        <InputText @bind-Value="HotelRoomModel.Name" class="form-control"></InputText>
+                        <ValidationMessage For="() => HotelRoomModel.Name"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <label>Occupancy</label>
+                        <InputNumber @bind-Value="HotelRoomModel.Occupancy" class="form-control"></InputNumber>
+                        <ValidationMessage For="() => HotelRoomModel.Occupancy"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <label>Regular Rate</label>
+                        <InputNumber @bind-Value="HotelRoomModel.RegularRate" class="form-control"></InputNumber>
+                        <ValidationMessage For="() => HotelRoomModel.RegularRate"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <label>Size (SrqFt.)</label>
+                        <InputNumber @bind-Value="HotelRoomModel.SqrFt" class="form-control"></InputNumber>
+                        <ValidationMessage For="() => HotelRoomModel.SqrFt"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <label>Details</label>
+                        <InputTextArea @bind-Value="HotelRoomModel.Details" class="form-control"></InputTextArea>
+                        <ValidationMessage For="() => HotelRoomModel.Details"></ValidationMessage>
+                    </div>
+                    <div class="form-group">
+                        <label>Select Images</label>
+                        <InputFile OnChange="HandleImageUpload" multiple class="form-control"></InputFile>
+                        @if (FileUploadSuccessMessage)
+                        {
+                            <span class="text-success">File uploaded successfully. Please continue to create room.</span>
+                        }
+                        @if (FileUploadErrorMessage)
+                        {
+                            <span class="text-danger">File can not uploaded.</span>
+                        }
+                    </div>
+                    <div class="form-group">
+                        @if (IsProcessingStart)
+                        {
+                            <button class="btn btn-primary" disabled="disabled" type="button"><i class="fa fa-spin fa-spinner"></i> Processing..</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary"> @Title Room </button>
+                        }
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+    
+</div>

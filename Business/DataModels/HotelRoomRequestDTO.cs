@@ -7,6 +7,7 @@ namespace Business.DataModels
 {
     public class HotelRoomRequestDTO
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Please enter room name")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Please enter Occupancy")]
@@ -20,5 +21,7 @@ namespace Business.DataModels
         public bool IsActive { get; set; } = true;
         public bool IsBooked { get; set; } = false;
         public List<string> ImageUrls { get; set; }
+        public string UserId { get; set; }
+        public IEnumerable<HotelRoomImageDTO> HotelRoomImages { get; set; }
     }
 }

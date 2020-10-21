@@ -25,6 +25,8 @@ namespace Business.Persistence
         public async Task<HotelRoomDTO> CreateHotelRoom(HotelRoomRequestDTO hotelRoom)
         {
             var room = _mapper.Map<HotelRoomRequestDTO, HotelRoom>(hotelRoom);
+            room.CreatedBy = hotelRoom.UserId;
+            room.CreatedDate = DateTime.UtcNow;
             var addedHotelRoom = await _context.HotelRooms.AddAsync(room);
             await _context.SaveChangesAsync();
 
@@ -35,19 +37,24 @@ namespace Business.Persistence
         {
             var roomDetails = await _context.HotelRooms.FindAsync(roomId);
             var room = _mapper.Map<HotelRoomRequestDTO,HotelRoom>(hotelRoom, roomDetails);
-
+            room.UpdatedBy = hotelRoom.UserId;
+            room.UpdatedDate = DateTime.UtcNow;
             var updatedRoom = _context.HotelRooms.Update(room);
             await _context.SaveChangesAsync();
 
             return _mapper.Map<HotelRoom, HotelRoomDTO>(updatedRoom.Entity);
         }
 
-        public async Task<int> DeleteHotelRoom(int roomId)
+        public async Task<int> DeleteHotelRoom(int roomId, string userId)
         {
             var roomDetails = await _context.HotelRooms.FindAsync(roomId);
             if (roomDetails != null)
             {
-                _context.HotelRooms.Remove(roomDetails);
+                roomDetails.IsDeleted = true;
+                roomDetails.DeletedBy = userId;
+                roomDetails.DeletedDate = DateTime.UtcNow;
+                
+                _context.HotelRooms.Update(roomDetails);
                 return await _context.SaveChangesAsync();
             }
 
@@ -58,7 +65,7 @@ namespace Business.Persistence
         {
             return _mapper.Map<IEnumerable<HotelRoom>, IEnumerable<HotelRoomDTO>>(await _context.HotelRooms
                 .Include(x => x.HotelRoomImages)
-                .Where(x => x.IsActive).ToListAsync());
+                .Where(x => x.IsActive && !x.IsDeleted).ToListAsync());
         }
 
         public async Task<HotelRoomDTO> GetHotelRoom(int roomId)
@@ -88,6 +95,14 @@ namespace Business.Persistence
             await _context.SaveChangesAsync();
 
             return true;
+        }
+
+        public async Task<HotelRoomDTO> IsSameNameRoomAlreadyExists(string name)
+        {
+            var roomDetails =
+                await _context.HotelRooms.FirstOrDefaultAsync(x => x.Name.ToLower().Trim() == name.ToLower().Trim());
+            
+            return _mapper.Map<HotelRoom,HotelRoomDTO>(roomDetails);
         }
     }
 }

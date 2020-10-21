@@ -1,6 +1,6 @@
 ﻿@page "/"
 @page "/hotel/rooms"
-@attribute [Authorize]
+@attribute [Authorize(Roles = "User,Developer")]
 @using Microsoft.AspNetCore.Authorization
 @inherits IndexBase
 
@@ -17,9 +17,9 @@
             foreach (var room in Rooms)
             {
                 var roomImageUrl = room.HotelRoomImages.Count > 0 ? room.HotelRoomImages.FirstOrDefault()?.RoomImageUrl : "";
-                <div class="col-md-4">
+                <div class="col-md-4 mb-4">
                     <div class="card">
-                        <img class="card-img-top" src="@roomImageUrl" alt="Card image cap">
+                        <img class="card-img-top" src="@roomImageUrl" height="200" alt="Card image cap">
                         <div class="card-body">
                             <h5 class="card-title">@room.Name</h5>
                             <p class="card-text">@room.Details</p>

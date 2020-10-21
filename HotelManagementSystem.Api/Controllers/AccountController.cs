@@ -112,7 +112,7 @@ namespace HotelManagementSystem.Api.Controllers
             if (result.Succeeded)
             {
                 var applicationUser = await _userManager.FindByEmailAsync(model.Email);
-                var addUserToRole = await _userManager.AddToRoleAsync(applicationUser, "User");
+                var addUserToRole = await _userManager.AddToRoleAsync(applicationUser, model.UserRole);
 
                 //Send confirmation email here
                 string code =HttpUtility.UrlEncode(await _userManager.GenerateEmailConfirmationTokenAsync(applicationUser));

@@ -18,5 +18,6 @@ namespace Business.DataModels
         [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Password and confirm password is not matched")]
         public string ConfirmPassword { get; set; }
+        public string UserRole { get; set; }
     }
 }

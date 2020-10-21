@@ -1,10 +1,10 @@
 ﻿@page "/logout"
 @using Microsoft.AspNetCore.Authorization
-@using HotelManagementSystem.BlazorWasm.Core 
+@using HotelManagementSystem.BlazorWasm.Core
 @inject IAuthenticationService AuthenticationService;
 @inject NavigationManager NavigationManager;
 
-@attribute [Authorize]
+@attribute [Authorize(Roles = "User,Developer")]
 
 <div class="row mt-4">
     <h3>logging out..</h3>

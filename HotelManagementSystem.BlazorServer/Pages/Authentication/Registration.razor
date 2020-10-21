@@ -1,0 +1,67 @@
+﻿@page "/registration"
+@layout AuthenticationLayout
+@inherits RegistrationBase
+<div class="row">
+    <div class="offset-3 col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title" style="font-weight:bold; color:purple">Registration</h5>
+                <EditForm Model="UserRegistrationVm" OnValidSubmit="HandelRegistration">
+                    <div class="form-group">
+                        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                        {
+                            <Error ErrorMessage="@ErrorMessage" />
+                        }
+                        @if (!string.IsNullOrWhiteSpace(SuccessMessage))
+                        {
+                            <Success SuccessMessage="@SuccessMessage" />
+                        }
+                    </div>
+                    <DataAnnotationsValidator />
+                    <div class="form-group">
+                        <input id="name" class="form-control" placeholder="Name" @bind-value="UserRegistrationVm.Name" />
+                        <ValidationMessage For="@(() => UserRegistrationVm.Name)" />
+                    </div>
+
+                    <div class="form-group">
+                        <input id="email" class="form-control" placeholder="Email" @bind-value="UserRegistrationVm.Email" />
+                        <ValidationMessage For="@(() => UserRegistrationVm.Email)" />
+                    </div>
+
+                    <div class="form-group">
+                        <input id="phoneNo" class="form-control" placeholder="Phone Number" @bind-value="UserRegistrationVm.PhoneNo" />
+                        <ValidationMessage For="@(() => UserRegistrationVm.PhoneNo)" />
+                    </div>
+
+                    <div class="form-group">
+                        <input id="password" class="form-control" type="password" placeholder="Password" @bind-value="UserRegistrationVm.Password" />
+                        <ValidationMessage For="@(() => UserRegistrationVm.Password)" />
+                    </div>
+
+                    <div class="form-group">
+                        <input id="confirmPassword" class="form-control" type="password" placeholder="Confirm Password" @bind-value="UserRegistrationVm.ConfirmPassword" />
+                        <ValidationMessage For="@(() => UserRegistrationVm.ConfirmPassword)" />
+                    </div>
+                    <div class="form-group">
+                        @if (IsProcessStart)
+                        {
+                            <button class="btn btn-primary btn-block" disabled="disabled" type="button"><i class="fa fa-spin fa-spinner"></i> Processing..</button>
+                        }
+                        else
+                        {
+                            <button class="btn btn-primary btn-block" type="submit">Create account</button>
+                        }
+
+                    </div>
+                    <div class="form-group">
+                        <NavLink href="login" class="font-weight-normal col-6 text-center">Already have an account? Click here to login</NavLink>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+

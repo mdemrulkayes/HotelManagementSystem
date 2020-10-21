@@ -1,0 +1,20 @@
+﻿@page "/logout"
+@using Microsoft.AspNetCore.Authorization
+@using HotelManagementSystem.BlazorServer.Services
+@inject IAuthenticationService AuthenticationService;
+@inject NavigationManager NavigationManager;
+
+@attribute [Authorize(Roles = "Admin,Developer")]
+
+<div class="row mt-4">
+    <h3>logging out..</h3>
+</div>
+
+@functions
+{
+    protected override async Task OnInitializedAsync()
+    {
+        await AuthenticationService.Logout();
+        NavigationManager.NavigateTo("login");
+    }
+}

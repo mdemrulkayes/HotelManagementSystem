@@ -1,0 +1,83 @@
+﻿@page "/"
+@page "/hotel-rooms"
+@inherits IndexBase
+
+@{
+    int serial = 1;
+}
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+        {
+            <Error ErrorMessage="@ErrorMessage" />
+        }
+        @if (!string.IsNullOrWhiteSpace(SuccessMessage))
+        {
+            <Success SuccessMessage="@SuccessMessage" />
+        }
+    </div>
+    <div class="col-md-12">
+        @if (IsLoadComplete)
+        {
+            <h5 class="card-title">Hotel Rooms</h5>
+            <table class="table table-bordered table-hover" id="tblHotelRoom">
+                <thead>
+                <tr>
+                    <th>Serial</th>
+                    @*<th>Image</th>*@
+                    <th>Name</th>
+                    <th>Occupancy</th>
+                    <th>Regular Rate</th>
+                    <th>Details</th>
+                    <th>Size (SqrFt)</th>
+                    <th>Status</th>
+                    <th>Created Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if (HotelRooms.Any())
+                {
+                    foreach (var room in HotelRooms)
+                    {
+                        var roomImageUrl = room.HotelRoomImages.Any() ? room.HotelRoomImages.FirstOrDefault()?.RoomImageUrl : "";
+                        <tr>
+                            <td>@(serial++)</td>
+                            @*<td><img src="@roomImageUrl" height="100" width="100" /></td>*@
+                            <td>@room.Name</td>
+                            <td>@room.Occupancy</td>
+                            <td>@room.RegularRate</td>
+                            <td>@room.Details</td>
+                            <td>@room.SqrFt</td>
+                            <td>@(room.IsBooked ? "Booked":"Free")</td>
+                            <td>@room.CreatedDate.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <NavLink href="@($"hotel-room/edit/{room.Id}")" class="btn btn-primary">Edit</NavLink>
+                                <button class="btn btn-danger" @onclick="() => HandleDelete(room.Id)">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9">No records found</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+
+        }
+        else
+        {
+            <div class="spinner"></div>
+        }
+        @if (ShowConfirmation)
+        {
+            <DeleteConfirmation ConfirmationChanged="ConfirmDelete_Click" 
+                                ConfirmationMessage=@($"Are you sure you want to delete the room?")></DeleteConfirmation>
+        }
+        
+    </div>
+</div>
