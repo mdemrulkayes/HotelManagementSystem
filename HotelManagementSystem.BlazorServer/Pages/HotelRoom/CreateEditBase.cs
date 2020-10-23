@@ -10,6 +10,8 @@ using Business.DataModels;
 using DataAccess.Data;
 using HotelManagementSystem.BlazorServer.Services;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 
 namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
 {
@@ -27,6 +29,7 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
         internal string ErrorMessage { get; set; }
         internal bool FileUploadSuccessMessage { get; set; } = false;
         internal bool FileUploadErrorMessage { get; set; } = false;
+        internal bool IsImageUploaded { get; set; } = false; 
 
         [Inject]
         public IHotelRepository HotelRepository { get; set; }
@@ -40,6 +43,8 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
         internal IAuthenticationService AuthService { get; set; }
         [Inject]
         internal NavigationManager NavigationManager { get; set; }
+        [Inject]
+        internal IJSRuntime JSRuntime { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -59,7 +64,14 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
             }
 
             Mapper.Map(HotelRoomDetails, HotelRoomModel);
+            if (HotelRoomDetails?.HotelRoomImages != null)
+            {
+                IsImageUploaded = true;
+                HotelRoomModel.ImageUrls = HotelRoomDetails.HotelRoomImages.Select(x => x.RoomImageUrl).ToList();
+            }
+           
         }
+
 
         internal async Task HandleHotelRoomCreate()
         {
@@ -86,6 +98,7 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                     }
                     
                     SuccessMessage = "Hotel Room updated successfully";
+                    await JSRuntime.InvokeVoidAsync("ShowToaster", "success", "Success", SuccessMessage);
                 }
                 else
                 {
@@ -109,16 +122,19 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                     HotelRoomModel = new HotelRoomRequestDTO();
                     HotelRoomDetails = new HotelRoomDTO();
                     SuccessMessage = "Hotel Room created successfully.";
+                    await JSRuntime.InvokeVoidAsync("ShowToaster", "success", "Success", SuccessMessage);
                 }
                 NavigationManager.NavigateTo("/");
                 IsProcessingStart = false;
-                
             }
             catch (Exception e)
             {
                 ErrorMessage = e.Message;
                 IsProcessingStart = false;
+                await JSRuntime.InvokeVoidAsync("ShowToaster", "error", "Error Occured", ErrorMessage);
             }
+
+            
         }
 
         public async Task HandleImageUpload(IFileListEntry[] files)
@@ -140,9 +156,20 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
 
                     if (images.Any())
                     {
-                        HotelRoomModel.ImageUrls = new List<string>();
-                        HotelRoomModel.ImageUrls.AddRange(images);
-                        FileUploadSuccessMessage = true;
+                        if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Any())
+                        {
+                            
+                            HotelRoomModel.ImageUrls.AddRange(images);
+                            FileUploadSuccessMessage = true;
+                        }
+                        else
+                        {
+                            HotelRoomModel.ImageUrls = new List<string>();
+                            HotelRoomModel.ImageUrls.AddRange(images);
+                            FileUploadSuccessMessage = true;
+                        }
+                        
+                        IsImageUploaded = true;
                     }
                     else
                     {
@@ -152,6 +179,7 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
             }
             catch (Exception e)
             {
+                ErrorMessage = e.Message;
                 FileUploadErrorMessage = true;
             }
         }
@@ -167,6 +195,13 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                 };
                 var createHotelRoomImage = await HotelImagesRepository.CreateHotelRoomImage(RoomImage);
             }
+        }
+
+        internal void DeletePhoto(string imageUrl)
+        {
+            var imageIndex = HotelRoomModel.ImageUrls.FindIndex(x => x == imageUrl);
+            HotelRoomModel.ImageUrls.RemoveAt(imageIndex);
+            StateHasChanged();
         }
     }
 }

@@ -14,14 +14,17 @@
                         <ValidationSummary />
                     </div>
                     <div class="form-group">
-                        @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                        @*@if (!string.IsNullOrWhiteSpace(ErrorMessage))
                         {
                             <Error ErrorMessage="@ErrorMessage" />
+                            <ToasterMessage ToasterType="Error" ToasterHeading="Error Occured" ToasterMessage="@ErrorMessage"></ToasterMessage>
                         }
                         @if (!string.IsNullOrWhiteSpace(SuccessMessage))
                         {
                             <Success SuccessMessage="@SuccessMessage" />
-                        }
+                            <ToasterMessage ToasterType="Success" ToasterHeading="Success" ToasterMessage="@SuccessMessage"></ToasterMessage>
+                        }*@
+
                     </div>
                     <div class="form-group">
                         <label>Name</label>
@@ -50,16 +53,36 @@
                     </div>
                     <div class="form-group">
                         <label>Select Images</label>
-                        <InputFile OnChange="HandleImageUpload" multiple class="form-control"></InputFile>
-                        @if (FileUploadSuccessMessage)
+                        <br/>
+                        <InputFile OnChange="HandleImageUpload" multiple></InputFile>
+                        @*@if (FileUploadSuccessMessage)
                         {
                             <span class="text-success">File uploaded successfully. Please continue to create room.</span>
                         }
                         @if (FileUploadErrorMessage)
                         {
                             <span class="text-danger">File can not uploaded.</span>
-                        }
+                        }*@
+                        <div class="row">
+                          
+                            @if (HotelRoomModel.ImageUrls != null && HotelRoomModel.ImageUrls.Count > 0)
+                            {
+                                foreach (var roomImage in HotelRoomModel.ImageUrls)
+                                {
+                                    int serial = 1;
+                                    <div class="col-md-2 mt-3">
+                                        <div class="room-image" style="background: url('@roomImage') 50% 50%;">
+                                            <span class="room-image-title">@serial</span>
+                                        </div>
+                                        <button type="button" class="btn btn-outline-danger btn-block mt-4" @onclick="() => DeletePhoto(roomImage)">Delete Photo</button>
+                                    </div>
+                                    
+                                }
+                            }
+                            
+                        </div>
                     </div>
+
                     <div class="form-group">
                         @if (IsProcessingStart)
                         {
@@ -67,7 +90,7 @@
                         }
                         else
                         {
-                            <button class="btn btn-primary"> @Title Room </button>
+                            <button class="btn btn-primary" disabled="@(!IsImageUploaded)"> @Title Room </button>
                         }
                     </div>
                 </EditForm>

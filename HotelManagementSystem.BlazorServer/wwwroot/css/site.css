@@ -205,3 +205,22 @@ app {
         transform: rotate(360deg)
     }
 }
+
+.room-image {
+    display: block;
+    width: 100%;
+    height: 150px;
+    background-size: cover !important;
+    border: 3px solid green;
+    position: relative;
+}
+
+.room-image-title {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: green;
+    color: white;
+    padding: 0px 6px;
+    display: inline-block
+}

@@ -67,10 +67,14 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                 {
                     var result = await HotelRepository.DeleteHotelRoom(DeleteRoomId.Value,AuthService.User.Id);
                     SuccessMessage = "Hotel Room Deleted successfully";
+                    ShowConfirmation = false;
+                    await JsRuntime.InvokeVoidAsync("ShowToaster", "success", "Success", SuccessMessage);
+                    NavigationManager.NavigateTo("/", true);
                 }
                 catch (Exception e)
                 {
                     ErrorMessage = e.Message;
+                    await JsRuntime.InvokeVoidAsync("ShowToaster", "error", "Error Occured", ErrorMessage);
                 }
                 HotelRooms = await HotelRepository.GetAllHotelRooms();
             }
