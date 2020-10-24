@@ -69,7 +69,7 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                     SuccessMessage = "Hotel Room Deleted successfully";
                     ShowConfirmation = false;
                     await JsRuntime.InvokeVoidAsync("ShowToaster", "success", "Success", SuccessMessage);
-                    NavigationManager.NavigateTo("/", true);
+                    //NavigationManager.NavigateTo("/", true);
                 }
                 catch (Exception e)
                 {
@@ -77,6 +77,8 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                     await JsRuntime.InvokeVoidAsync("ShowToaster", "error", "Error Occured", ErrorMessage);
                 }
                 HotelRooms = await HotelRepository.GetAllHotelRooms();
+                await JsRuntime.InvokeAsync<object>("DestroyDataTable");
+                await JsRuntime.InvokeAsync<object>("DataTable");
             }
 
             ShowConfirmation = false;

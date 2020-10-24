@@ -25,7 +25,8 @@ namespace HotelManagementSystem.BlazorServer.Data
         {
             try
             {
-                var fileName = Guid.NewGuid() +"_"+ file.Name;
+                FileInfo fileInfo = new FileInfo(file.Name);
+                var fileName = Guid.NewGuid().ToString() + fileInfo.Extension;
                 var folderDirectory = $"{_webHostEnvironment.WebRootPath}\\RoomImages";
                 var path = Path.Combine(_webHostEnvironment.WebRootPath, "RoomImages", fileName);
                 var memoryStream = new MemoryStream();
@@ -43,6 +44,25 @@ namespace HotelManagementSystem.BlazorServer.Data
 
                 var fullPath = $"{_configuration["ImageUrl"]}/RoomImages/{fileName}";
                 return fullPath;
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
+        public bool DeleteFile(string fileName)
+        {
+            bool status = false;
+            try
+            {
+                var path = $"{_webHostEnvironment.WebRootPath}\\RoomImages\\{fileName}";
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                    status = true;
+                }
+                return status;
             }
             catch (Exception e)
             {

@@ -4,36 +4,17 @@
     });
 }
 
-function ShowToaster(type,header,message) {
-    $.toastDefaults = {
-
-        // top-left, top-right, bottom-left, bottom-right, top-center, and bottom-center
-        position: 'top-right',
-
-        // is dismissable?
-        dismissible: true,
-
-        // is stackable?
-        stackable: true,
-
-        // pause dely on hover
-        pauseDelayOnHover: true,
-
-        // additional CSS Classes
-        style: {
-            toast: '',
-            info: '',
-            success: '',
-            warning: '',
-            error: '',
-        }
-
-    };
-
-    $.toast({
-        title: header,
-        content: message,
-        type: type,
-        delay: 10000
+function DestroyDataTable() {
+    $(document).ready(function () {
+        $('#tblHotelRoom').DataTable().destroy();;
     });
+}
+
+function ShowToaster(type,header,message) {
+    if (type === "success") {
+        toastr.success(message,header,{ timeOut: 10000 });
+    }
+    if (type === "error") {
+        toastr.error(message, header, { timeOut: 10000 });
+    }
 }

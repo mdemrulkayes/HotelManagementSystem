@@ -100,7 +100,7 @@ namespace Business.Persistence
         public async Task<HotelRoomDTO> IsSameNameRoomAlreadyExists(string name)
         {
             var roomDetails =
-                await _context.HotelRooms.FirstOrDefaultAsync(x => x.Name.ToLower().Trim() == name.ToLower().Trim());
+                await _context.HotelRooms.FirstOrDefaultAsync(x => x.Name.ToLower().Trim() == name.ToLower().Trim() && !x.IsDeleted);
             
             return _mapper.Map<HotelRoom,HotelRoomDTO>(roomDetails);
         }

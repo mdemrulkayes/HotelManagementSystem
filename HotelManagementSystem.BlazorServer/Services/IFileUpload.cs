@@ -9,5 +9,6 @@ namespace HotelManagementSystem.BlazorServer.Services
     public interface IFileUpload
     {
         Task<string> UploadFile(IFileListEntry file);
+        bool DeleteFile(string fileName);
     }
 }
