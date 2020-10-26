@@ -23,6 +23,7 @@ namespace HotelManagementSystem.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetHotelRooms()
         {
             var allRooms = await _hotelRepository.GetAllHotelRooms();

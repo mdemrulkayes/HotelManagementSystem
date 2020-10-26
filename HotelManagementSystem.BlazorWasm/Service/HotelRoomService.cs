@@ -32,8 +32,8 @@ namespace HotelManagementSystem.BlazorWasm.Service
 
         public async Task<IEnumerable<HotelRoomDTO>> GetHotelRooms()
         {
-            var userDetails = await _localStorageService.GetItemAsync<UserDTO>("UserDetails");
-            _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userDetails.Token);
+            //var userDetails = await _localStorageService.GetItemAsync<UserDTO>("UserDetails");
+            //_client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", userDetails.Token);
             var response = await _client.GetAsync("hotelrooms");
 
             if (await IsNotAuthorize(response)) return null;

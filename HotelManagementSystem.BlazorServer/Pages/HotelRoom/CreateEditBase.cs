@@ -30,6 +30,7 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
         internal bool IsImageUploaded { get; set; } = false;
         internal bool IsImageUploadProcessStart { get; set; } = false;
         internal string ImageProcessMessage { get; set; } = string.Empty;
+        internal bool IsStateChange { get; set; } = true;
 
         [Inject]
         public IHotelRepository HotelRepository { get; set; }
@@ -73,7 +74,6 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
             }
            
         }
-
 
         internal async Task HandleHotelRoomCreate()
         {

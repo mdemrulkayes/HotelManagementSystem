@@ -153,6 +153,59 @@ namespace HotelManagementSystem.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        public async Task<IActionResult> SigninWithFacebook([FromBody] FacebookAuthenticationDto model)
+        {
+            //Create FB User without password if not exists
+
+            var userInfo = await _userManager.FindByEmailAsync(model.Email);
+            if (userInfo == null)
+            {
+                var applicationUser = new ApplicationUser()
+                {
+                    Email = model.Email,
+                    Name = model.Name,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    UserName = model.Email,
+                    UserType = UserType.FbUser,
+                    IsDeleted = false,
+                    FbUserId = model.FbId
+                };
+
+                await _userManager.CreateAsync(applicationUser);
+                var newlyCreatedUser =await _userManager.FindByEmailAsync(model.Email);
+                var addUserToRole = await _userManager.AddToRoleAsync(newlyCreatedUser, "User");
+
+                var user = await _userRepository.GetUserByNameAsync(model.Email);
+                var userWithToken = await GenerateJwtToken(user);
+                userWithToken.RefreshToken = GenerateRefreshToken();
+
+                var updateRefreshTokenResult = await _userRepository.UpdateUser(user.Id, userWithToken);
+
+                return Ok(userWithToken);
+            }
+
+            if (userInfo.UserType == UserType.FbUser)
+            {
+                var user = await _userRepository.GetUserByNameAsync(model.Email);
+                var userWithToken = await GenerateJwtToken(user);
+                userWithToken.RefreshToken = GenerateRefreshToken();
+
+                var updateRefreshTokenResult = await _userRepository.UpdateUser(user.Id, userWithToken);
+
+                return Ok(userWithToken);
+            }
+
+
+            return BadRequest(new ErrorModel()
+            {
+                StatusCode = StatusCodes.Status400BadRequest,
+                ErrorMessage = "Invalid UserName or Password"
+            });
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail([FromBody] ConfirmEmailDTO model)
         {
             if (ModelState.IsValid)

@@ -1,0 +1,19 @@
+﻿@page "/"
+@using HotelManagementSystem.BlazorServer.Services
+@inject NavigationManager NavigationManager;
+@inject IAuthenticationService AuthenticationService;
+<div class="row mt-4">
+    <h4>Welcome to Hotel Management System</h4>
+</div>
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await AuthenticationService.IsUserAuthorized())
+        {
+            NavigationManager.NavigateTo("login",true);
+            return;
+        }
+    }
+}

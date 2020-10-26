@@ -29,7 +29,7 @@ namespace HotelManagementSystem.BlazorWasm.Helpers
             if (authorize && isLoggedIn == false && userDetails == null)
             {
                 var returnUrl = WebUtility.UrlEncode(new Uri(NavigationManager.Uri).PathAndQuery);
-                NavigationManager.NavigateTo("login");
+                NavigationManager.NavigateTo($"login?returnUrl={returnUrl}");
             }
             else
             {

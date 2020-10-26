@@ -50,10 +50,10 @@ namespace HotelManagementSystem.Api.Controllers
                                 ProductData = new SessionLineItemPriceDataProductDataOptions
                                 {
                                     Name = payment.ProductName,
-                                    Images = new List<string>()
-                                    {
-                                        payment.ImageUrl
-                                    }
+                                    //Images = new List<string>()
+                                    //{
+                                    //    payment.ImageUrl
+                                    //}
                                 },
                             },
                             Quantity = 1,

@@ -2,5 +2,12 @@
 @using Microsoft.AspNetCore.Authorization
 @attribute [Authorize(Roles = "User,Developer")]
 <div class="row mt-4">
-    <h5 class="card-title">Payment Failed</h5>
+    <div class="card">
+        <div class="card-header bg-danger">
+            <i class="fa fa-warning"></i> Payment Failed
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Your payment is not succeed. Please try again.</h5>
+        </div>
+    </div>
 </div>

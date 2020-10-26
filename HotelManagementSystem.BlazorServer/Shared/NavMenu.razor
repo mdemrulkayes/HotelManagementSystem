@@ -1,7 +1,7 @@
-﻿@using Blazored.LocalStorage
+﻿
 @using Business.DataModels
-@inject ILocalStorageService LocalStorageService;
 @inject ProtectedSessionStorage SessionStorage;
+@inject NavigationManager NavigationManager;
 
 <nav class="navbar navbar-expand-lg navbar-light" style="border-bottom: 1px solid #ccc; box-shadow: 0 0 8px 0 #cccccc">
     <a class="navbar-brand" href="#">Hotel Management System</a>
@@ -25,10 +25,10 @@
                     Hotel Rooms
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <NavLink class="nav-link" href="hotel-rooms">
+                    <NavLink class="nav-link" href="/hotel-rooms">
                         Rooms
                     </NavLink>
-                    <NavLink class="nav-link" href="hotel-room/create">
+                    <NavLink class="nav-link" href="/hotel-room/create" @onclick="HandleCreateNavClick">
                         Create
                     </NavLink>
                 </div>
@@ -36,7 +36,7 @@
             @if (IsLoggedIn && UserDetails != null)
             {
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="logout">
+                    <NavLink class="nav-link" href="/logout">
                         Logout
                     </NavLink>
 
@@ -45,7 +45,7 @@
             else
             {
                 <li class="nav-item">
-                    <NavLink class="nav-link" href="login">
+                    <NavLink class="nav-link" href="/login">
                         Login
                     </NavLink>
 
@@ -67,10 +67,9 @@
         StateHasChanged();
     }
 
-    //protected override async Task OnAfterRenderAsync(bool firstRender)
-    //{
-    //    IsLoggedIn = await LocalStorageService.GetItemAsync<bool>("IsLoggedIn");
-    //    UserDetails = await LocalStorageService.GetItemAsync<UserDTO>("UserDetails");
-    //}
+    private void HandleCreateNavClick()
+    {
+        NavigationManager.NavigateTo("hotel-room/create", true);
+    }
 
 }

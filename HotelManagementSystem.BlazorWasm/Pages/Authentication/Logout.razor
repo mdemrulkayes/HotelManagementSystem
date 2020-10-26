@@ -1,8 +1,10 @@
 ﻿@page "/logout"
 @using Microsoft.AspNetCore.Authorization
 @using HotelManagementSystem.BlazorWasm.Core
+@using Common
 @inject IAuthenticationService AuthenticationService;
 @inject NavigationManager NavigationManager;
+@inject IJSRuntime JsRuntime;
 
 @attribute [Authorize(Roles = "User,Developer")]
 
@@ -12,9 +14,31 @@
 
 @functions
 {
+    private static Action Action;
     protected override async Task OnInitializedAsync()
+    {
+        Action = async () =>
+        {
+            await LogoutProcess();
+        };
+
+        var userDetails = AuthenticationService.User;
+        if (userDetails.UserType == UserType.FbUser)
+        {
+            await JsRuntime.InvokeVoidAsync("fbLogout");
+        }
+        await LogoutProcess();
+    }
+
+    private async Task LogoutProcess()
     {
         await AuthenticationService.Logout();
         NavigationManager.NavigateTo("login");
+    }
+
+    [JSInvokable("FbLogOutCallback")]
+    public static void FbLogOutCallback()
+    {
+        Action.Invoke();
     }
 }

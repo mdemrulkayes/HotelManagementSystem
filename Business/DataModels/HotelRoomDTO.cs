@@ -28,6 +28,8 @@ namespace Business.DataModels
         public DateTime UpdatedDate { get; set; }
         public string DeletedBy { get; set; }
         public DateTime DeletedDate { get; set; }
+        public double TotalDays { get; set; }
+        public decimal TotalAmount { get; set; }
 
         public virtual ICollection<HotelRoomImageDTO> HotelRoomImages { get; set; }
     }

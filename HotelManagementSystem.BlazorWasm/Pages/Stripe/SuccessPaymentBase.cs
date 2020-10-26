@@ -14,6 +14,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.Stripe
         public bool IsPaymentComplete { get; set; } = false;
         public string ErrorMessage { get; set; }
         public string SuccessMessage { get; set; }
+        public int OrderId { get; set; }
         [Inject]
         public ILocalStorageService LocalStorageService { get; set; }
         [Inject]
@@ -26,7 +27,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.Stripe
             SuccessMessage = "";
             var orderDetails = await LocalStorageService.GetItemAsync<RoomOrderDetails>("OrderDetails");
             var roomId = await LocalStorageService.GetItemAsync<int>("RoomId");
-
+            OrderId = orderDetails.Id;
             try
             {
                var paymentResult = await HotelRoomService.MarkPaymentSuccessful(orderDetails);
@@ -39,6 +40,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.Stripe
 
             await LocalStorageService.RemoveItemAsync("OrderDetails");
             await LocalStorageService.RemoveItemAsync("RoomId");
+            await LocalStorageService.RemoveItemAsync("InitialRoomBookingInfo");
 
             IsPaymentComplete = true;
         }

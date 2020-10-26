@@ -1,6 +1,16 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime JsRuntime;
+
 <NavMenu />
 <div class="container-fluid">
     @Body
 </div>
 
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        await JsRuntime.InvokeVoidAsync("fbAsyncInit");
+    }
+}

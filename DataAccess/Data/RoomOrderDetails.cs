@@ -25,6 +25,10 @@ namespace DataAccess.Data
         public int RoomId { get; set; }
 
         public bool IsPaymentSuccessful { get; set; } = false;
+        [Required]
+        public string Name { get; set; }
+        [Required]
+        public string Email { get; set; }
 
         [ForeignKey("RoomId")]
         public HotelRoom HotelRoom { get; set; }

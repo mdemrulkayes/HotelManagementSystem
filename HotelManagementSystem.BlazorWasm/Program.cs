@@ -7,6 +7,7 @@ using HotelManagementSystem.BlazorWasm.Service;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 
+
 namespace HotelManagementSystem.BlazorWasm
 {
     public class Program

@@ -1,5 +1,14 @@
 ﻿@inherits LayoutComponentBase
-
+@inject IJSRuntime JsRuntime;
 <div class="container mt-4">
     @Body
 </div>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+
+        await JsRuntime.InvokeVoidAsync("fbAsyncInit");
+    }
+}

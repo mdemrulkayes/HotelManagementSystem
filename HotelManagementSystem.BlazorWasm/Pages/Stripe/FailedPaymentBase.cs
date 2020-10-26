@@ -16,6 +16,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.Stripe
         {
             await LocalStorageService.RemoveItemAsync("OrderDetails");
             await LocalStorageService.RemoveItemAsync("RoomId");
+            await LocalStorageService.RemoveItemAsync("InitialRoomBookingInfo");
         }
     }
 }

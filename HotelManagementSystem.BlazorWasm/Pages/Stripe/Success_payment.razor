@@ -10,17 +10,23 @@
     else
     {
         <div class="card">
-            <h5 class="card-title">Your room is successfully booked</h5>
-            <div class="form-group">
-                @if (!string.IsNullOrWhiteSpace(ErrorMessage))
-                {
-                    <Error ErrorMessage="@ErrorMessage" />
-                }
-                @if (!string.IsNullOrWhiteSpace(SuccessMessage))
-                {
-                    <Success SuccessMessage="@SuccessMessage" />
-                }
+            <div class="card-header bg-success">
+                <i class="fa fa-info"></i> Success
             </div>
+            <div class="card-body">
+                <h5 class="card-title">Your room is successfully booked with order id @OrderId</h5>
+                <div class="form-group">
+                    @if (!string.IsNullOrWhiteSpace(ErrorMessage))
+                    {
+                        <Error ErrorMessage="@ErrorMessage"/>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(SuccessMessage))
+                    {
+                        <Success SuccessMessage="@SuccessMessage"/>
+                    }
+                </div>
+            </div>
+
         </div>
     }
 

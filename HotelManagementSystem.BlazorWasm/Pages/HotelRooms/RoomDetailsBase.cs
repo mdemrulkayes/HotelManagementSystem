@@ -41,11 +41,35 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
 
             try
             {
+               
                 HotelRoomBooking.RoomOrderDetails = new RoomOrderDetails();
                 if (Id != null)
                 {
                     HotelRoomBooking.HotelRoom = await HotelRoomService.GetHotelRoomDetails(Id.Value);
                     HotelRoomBooking.ImageUrl = HotelRoomBooking.HotelRoom.HotelRoomImages.Count > 0 ? HotelRoomBooking.HotelRoom.HotelRoomImages.FirstOrDefault()?.RoomImageUrl : "";
+
+                    if (await LocalStorageService.GetItemAsync<HomeModelVm>("InitialRoomBookingInfo") != null)
+                    {
+                        var roomInitialInfo = await LocalStorageService.GetItemAsync<HomeModelVm>("InitialRoomBookingInfo");
+                        HotelRoomBooking.RoomOrderDetails.CheckInDate = roomInitialInfo.StartDate;
+                        HotelRoomBooking.RoomOrderDetails.CheckOutDate = roomInitialInfo.EndDate;
+                        HotelRoomBooking.HotelRoom.TotalDays = roomInitialInfo.TotalDay;
+                        HotelRoomBooking.HotelRoom.TotalAmount = Convert.ToDecimal(roomInitialInfo.TotalDay) * HotelRoomBooking.HotelRoom.RegularRate;
+                    }
+                    else
+                    {
+                        HotelRoomBooking.RoomOrderDetails.CheckInDate = DateTime.UtcNow;
+                        HotelRoomBooking.RoomOrderDetails.CheckOutDate = DateTime.UtcNow.AddDays(1);
+                        HotelRoomBooking.HotelRoom.TotalDays = 1;
+                        HotelRoomBooking.HotelRoom.TotalAmount = HotelRoomBooking.HotelRoom.RegularRate;
+                    }
+
+                    if (await LocalStorageService.GetItemAsync<UserDTO>("UserDetails") != null)
+                    {
+                        var userInfo = await LocalStorageService.GetItemAsync<UserDTO>("UserDetails");
+                        HotelRoomBooking.RoomOrderDetails.Name = userInfo.Name;
+                        HotelRoomBooking.RoomOrderDetails.Email = userInfo.Email;
+                    }
                 }
                 
             }
@@ -71,8 +95,8 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
             var userDetailsOnSignIn = await LocalStorageService.GetItemAsync<UserDTO>("UserDetails");
             try
             {
-                long totalDays = HotelRoomBooking.RoomOrderDetails.CheckOutDate
-                    .Subtract(HotelRoomBooking.RoomOrderDetails.CheckInDate).Days;
+                var totalDays = HotelRoomBooking.RoomOrderDetails.CheckOutDate.Date
+                    .Subtract(HotelRoomBooking.RoomOrderDetails.CheckInDate.Date).Days;
                 
                 if (totalDays <= 0)
                 {
@@ -81,7 +105,7 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
                 var paymentDto = new StripePaymentDTO()
                 {
                     //UserId = "e17daf5e-be34-447d-ab1b-1202b438dc49",
-                    Amount = totalDays * Convert.ToInt64(HotelRoomBooking.HotelRoom.RegularRate),
+                    Amount = Convert.ToInt64(Convert.ToDecimal(totalDays) * HotelRoomBooking.HotelRoom.RegularRate),
                     ProductName = HotelRoomBooking.HotelRoom.Name,
                     ImageUrl = HotelRoomBooking.ImageUrl
                 };
@@ -94,13 +118,14 @@ namespace HotelManagementSystem.BlazorWasm.Pages.HotelRooms
                 HotelRoomBooking.RoomOrderDetails.StripeSessionId = result.Data.ToString();
                 HotelRoomBooking.RoomOrderDetails.RoomId = HotelRoomBooking.HotelRoom.Id;
                 HotelRoomBooking.RoomOrderDetails.TotalCost =
-                    totalDays * Convert.ToInt64(HotelRoomBooking.HotelRoom.RegularRate);
+                    Convert.ToInt64(Convert.ToDecimal(totalDays) * HotelRoomBooking.HotelRoom.RegularRate);
                 HotelRoomBooking.RoomOrderDetails.UserId = userDetailsOnSignIn.Id;
 
                 var roomOrderDetailsSavedResult = await HotelRoomService.SaveRoomOrderDetails(HotelRoomBooking.RoomOrderDetails);
 
                 await LocalStorageService.SetItemAsync("OrderDetails", roomOrderDetailsSavedResult);
                 await LocalStorageService.SetItemAsync("RoomId", HotelRoomBooking.HotelRoom.Id);
+                
                 #endregion
 
                 await JsRuntime.InvokeVoidAsync("redirectToCheckout", result.Data.ToString());

@@ -8,6 +8,7 @@ using Blazored.LocalStorage;
 using Business.DataModels;
 using Business.Models;
 using HotelManagementSystem.BlazorWasm.Core;
+using HotelManagementSystem.BlazorWasm.Models.ViewModels;
 using Newtonsoft.Json;
 
 namespace HotelManagementSystem.BlazorWasm.Service
@@ -54,6 +55,32 @@ namespace HotelManagementSystem.BlazorWasm.Service
         public async Task<UserDTO> SignIn(AuthenticationDTO model)
         {
             var response = await _client.PostAsJsonAsync("account/signin", model);
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<UserDTO>(content);
+                await _localStorageService.SetItemAsync("UserDetails", result);
+                await _localStorageService.SetItemAsync("IsLoggedIn", true);
+                await Initialize();
+                return result;
+            }
+            else
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                var error = JsonConvert.DeserializeObject<ErrorModel>(content);
+                throw new Exception(error.ErrorMessage);
+            }
+        }
+
+        public async Task<UserDTO> SigninInWithFacebook(FbResponseVm model)
+        {
+            var apiModel = new FacebookAuthenticationDto()
+            {
+                Name = model.first_name + " " +model.last_name,
+                Email = model.email,
+                FbId = model.id
+            };
+            var response = await _client.PostAsJsonAsync("account/SigninWithFacebook", apiModel);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
