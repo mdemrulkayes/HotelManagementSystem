@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Mailjet.Client;
 using Mailjet.Client.Resources;
@@ -12,10 +10,8 @@ namespace Common
     {
         public static async Task<bool> SendEmailAsync(string receiverEmail, string subject, string body)
         {
-            MailjetClient mjClient = new MailjetClient(KeyVault.MAIL_JET_PUBLIC_API_KEY, KeyVault.MAIL_JET_PRIVATE_API_KEY)
-            {
-                Version = ApiVersion.V3_1
-            };
+            MailjetClient mjClient =
+                new MailjetClient(KeyVault.MAIL_JET_PUBLIC_API_KEY, KeyVault.MAIL_JET_PRIVATE_API_KEY);
 
             MailjetRequest mjRequest = new MailjetRequest()
             {

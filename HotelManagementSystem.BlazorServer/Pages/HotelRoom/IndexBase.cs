@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Business.Core;
 using Business.DataModels;
 using HotelManagementSystem.BlazorServer.Services;
-using HotelManagementSystem.BlazorServer.Shared;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 

@@ -1,0 +1,18 @@
+version: '3.4'
+
+services:
+  hotelmanagementsystem.api:
+    image: hotelmanagementsystemapi
+    build:
+      context: .
+      dockerfile: HotelManagementSystem.Api/Dockerfile
+  hotelmanagementsystem.blazorserver:
+    image: hotel-blazor-server
+    build:
+        context: .
+        dockerfile: HotelManagementSystem.BlazorServer/Dockerfile
+  hotelmanagementsystem.blazorwasm:
+    image: hotel-blazor-wasm
+    build:
+        context: .
+        dockerfile: HotelManagementSystem.BlazorWasm/Dockerfile

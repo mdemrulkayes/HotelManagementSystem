@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace HotelManagementSystem.BlazorWasm.Models.ViewModels
+﻿namespace HotelManagementSystem.BlazorWasm.Models.ViewModels
 {
     public class FbResponseVm
     {

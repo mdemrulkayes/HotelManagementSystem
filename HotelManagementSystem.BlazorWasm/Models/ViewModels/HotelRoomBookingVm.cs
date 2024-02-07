@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Business.DataModels;
+﻿using Business.DataModels;
 using DataAccess.Data;
 
 namespace HotelManagementSystem.BlazorWasm.Models.ViewModels

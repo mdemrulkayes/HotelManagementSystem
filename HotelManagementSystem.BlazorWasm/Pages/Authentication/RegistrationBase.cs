@@ -1,14 +1,10 @@
 ﻿using Business.DataModels;
 using Microsoft.AspNetCore.Components;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using HotelManagementSystem.BlazorWasm.Core;
 using HotelManagementSystem.BlazorWasm.Models.ViewModels;
 using Microsoft.AspNetCore.Http;
-using Microsoft.JSInterop;
 
 namespace HotelManagementSystem.BlazorWasm.Pages.Authentication
 {

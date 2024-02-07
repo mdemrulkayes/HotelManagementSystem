@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using BlazorInputFile;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components.Forms;
 
 namespace HotelManagementSystem.BlazorServer.Services
 {
     public interface IFileUpload
     {
-        Task<string> UploadFile(IFileListEntry file);
+        Task<string> UploadFile(IBrowserFile file);
         bool DeleteFile(string fileName);
     }
 }

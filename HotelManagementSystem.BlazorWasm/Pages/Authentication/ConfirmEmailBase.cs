@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using Business.DataModels;
 using HotelManagementSystem.BlazorWasm.Core;
-using HotelManagementSystem.BlazorWasm.Models.ViewModels;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.WebUtilities;
 

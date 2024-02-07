@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using BlazorInputFile;
 using HotelManagementSystem.BlazorServer.Services;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 
@@ -21,7 +19,7 @@ namespace HotelManagementSystem.BlazorServer.Data
             _configuration = configuration;
         }
 
-        public async Task<string> UploadFile(IFileListEntry file)
+        public async Task<string> UploadFile(IBrowserFile file)
         {
             try
             {
@@ -30,7 +28,7 @@ namespace HotelManagementSystem.BlazorServer.Data
                 var folderDirectory = $"{_webHostEnvironment.WebRootPath}\\RoomImages";
                 var path = Path.Combine(_webHostEnvironment.WebRootPath, "RoomImages", fileName);
                 var memoryStream = new MemoryStream();
-                await file.Data.CopyToAsync(memoryStream);
+                await file.OpenReadStream().CopyToAsync(memoryStream);
 
                 if (!Directory.Exists(folderDirectory))
                 {
