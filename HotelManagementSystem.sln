@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30503.244
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34525.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.Api", "HotelManagementSystem.Api\HotelManagementSystem.Api.csproj", "{F6EA60EB-B7CB-4E93-87C8-FF4BFA4DA1BB}"
 EndProject
@@ -14,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.BlazorWasm", "HotelManagementSystem.BlazorWasm\HotelManagementSystem.BlazorWasm.csproj", "{215136D0-537C-44F9-B1CC-6E2A0B25CFAF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotelManagementSystem.BlazorServer", "HotelManagementSystem.BlazorServer\HotelManagementSystem.BlazorServer.csproj", "{AB6DD040-B970-43B5-A685-5A3EE5D969C7}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{BB4BB9A2-11DC-43EA-A199-F98B6E5D91C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,6 +47,10 @@ Global
 		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AB6DD040-B970-43B5-A685-5A3EE5D969C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB4BB9A2-11DC-43EA-A199-F98B6E5D91C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB4BB9A2-11DC-43EA-A199-F98B6E5D91C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB4BB9A2-11DC-43EA-A199-F98B6E5D91C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB4BB9A2-11DC-43EA-A199-F98B6E5D91C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

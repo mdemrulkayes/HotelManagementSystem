@@ -1,12 +1,8 @@
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace HotelManagementSystem.Api
@@ -32,7 +28,6 @@ namespace HotelManagementSystem.Api
                 {
                     webBuilder.UseStartup<Startup>()
                         .UseConfiguration(Configuration)
-                        .UseSerilog()
                         .CaptureStartupErrors(true)
                         .UseSetting("detailedErrors", "true");
                 });

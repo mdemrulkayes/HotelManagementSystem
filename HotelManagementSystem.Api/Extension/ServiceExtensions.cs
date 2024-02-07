@@ -1,6 +1,5 @@
 ﻿using Business.Core;
 using Business.Persistence;
-using DataAccess.Data;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelManagementSystem.Api.Extension

@@ -55,14 +55,6 @@
                         <label>Select Images</label>
                         <br />
                         <InputFile OnChange="HandleImageUpload" multiple></InputFile>
-                        @*@if (FileUploadSuccessMessage)
-                            {
-                                <span class="text-success">File uploaded successfully. Please continue to create room.</span>
-                            }
-                            @if (FileUploadErrorMessage)
-                            {
-                                <span class="text-danger">File can not uploaded.</span>
-                            }*@
                         <div class="row">
 
                             @if (IsImageUploadProcessStart)

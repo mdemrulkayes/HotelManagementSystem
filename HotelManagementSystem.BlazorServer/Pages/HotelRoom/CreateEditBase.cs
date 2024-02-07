@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
-using BlazorInputFile;
 using Business.Core;
 using Business.DataModels;
 using DataAccess.Data;
@@ -142,12 +141,13 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
             }
         }
 
-        public async Task HandleImageUpload(IFileListEntry[] files)
+        public async Task HandleImageUpload(InputFileChangeEventArgs args)
         {
             IsImageUploadProcessStart = true;
             ImageProcessMessage = "Please wait.. Images are uploading...";
             try
             {
+                var files = args.GetMultipleFiles();
                 var images = new List<string>();
                 if (files.Any())
                 {
@@ -170,7 +170,7 @@ namespace HotelManagementSystem.BlazorServer.Pages.HotelRoom
                         else
                         {
                             HotelRoomModel.ImageUrls = new List<string>();
-                            HotelRoomModel.ImageUrls.AddRange(images);
+                            HotelRoomModel.ImageUrls?.AddRange(images);
                         }
                         
                         IsImageUploaded = true;

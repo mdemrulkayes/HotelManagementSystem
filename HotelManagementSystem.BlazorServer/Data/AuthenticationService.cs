@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Blazored.LocalStorage;
 using Business.DataModels;
 using Business.Models;
 using HotelManagementSystem.BlazorServer.Services;
-using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.ProtectedBrowserStorage;
 using Newtonsoft.Json;
 

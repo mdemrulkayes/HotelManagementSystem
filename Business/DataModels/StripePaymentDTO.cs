@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Business.DataModels
+﻿namespace Business.DataModels
 {
     public class StripePaymentDTO
     {
