@@ -1,1 +1,1 @@
-# Hotel Management System a demo project to create Room, Book a room and configure payment
+# Hotel Reservation System a demo project to create a Room, Book a room, and configure payment
